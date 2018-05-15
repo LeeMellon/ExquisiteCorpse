@@ -1,0 +1,8 @@
+﻿@model ExquisiteCorpse1.ViewModels.UserManagementAddRoleViewModel
+
+<h3> Add Role To User @Model.ProfileName</h3>
+<form asp-controller="UserManagement" asp-action="AddRole">
+    <input asp-for="UserId" type="hidden" />
+    <select asp-for="NewRole" asp-items="Model.Roles"></select>
+    <input type="submit" value="Add Role" />
+</form>
