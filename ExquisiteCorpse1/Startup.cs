@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using ExquisiteCorpse1.Models;
 using ExquisiteCorpse1.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ExquisiteCorpse1.Configuration;
+using Microsoft.AspNetCore.Identity;
 
 namespace ExquisiteCorpse1
 {
@@ -79,6 +81,8 @@ namespace ExquisiteCorpse1
                     name: "default",
                     template: "{controller=Account}/{action=Index}/{id?}");
             });
+
+            new UserRoleSeed(app.ApplicationServices.GetService<RoleManager<IdentityRole>>()).Seed();
         }
     }
 }
