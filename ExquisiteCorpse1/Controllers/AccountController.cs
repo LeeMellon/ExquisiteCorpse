@@ -19,7 +19,7 @@ namespace MoneyMinder.Net.Controllers
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext db)
         {
             _userManager = userManager;
-   
+
             _signInManager = signInManager;
             _db = db;
         }
@@ -37,18 +37,24 @@ namespace MoneyMinder.Net.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var user = new ApplicationUser { UserName = model.Email, ProfileName = model.ProfileName};
-            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-            if (result.Succeeded)
+            var user = new ApplicationUser { UserName = model.Email, ProfileName = model.ProfileName };
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
-            else
-            {
                 return View();
-            }
-        }
 
+        } 
+
+
+            
+
+        
         public IActionResult Login()
         {
             return View();

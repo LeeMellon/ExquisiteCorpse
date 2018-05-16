@@ -9,10 +9,9 @@ namespace ExquisiteCorpse1.Models
     {
  
         public string ProfileName { get; set; }
-        public string Role { get; set; }
         public virtual List<Section> Sections { get; set; }
         public virtual List<UserCorpse> UserCorpses { get; set; }
-
+        public virtual List<ApplicationUser> Friends { get; set; }
 
         public override bool Equals(System.Object otherApplicationUser)
         {
@@ -31,5 +30,10 @@ namespace ExquisiteCorpse1.Models
         {
             return this.Id.GetHashCode();
         }
+        public void AddFriend(ApplicationUser friend)
+        {
+            this.Friends.Add(friend);
+        }
+
     }
 }

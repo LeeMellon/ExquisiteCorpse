@@ -14,6 +14,7 @@ namespace ExquisiteCorpse1.Models
         [Key]
         public int CorpseId { get; set; }
         public List<Section> Sections { get; set; }
+        public List<ApplicationUser> Players { get; set; }
         public int Rounds { get; set; }
         public int CurrentRound { get; set; }
         public List<UserCorpse> UserCorpses { get; set; }
