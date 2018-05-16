@@ -19,9 +19,9 @@ namespace ExquisiteCorpse1.Configuration
         public async void Seed()
         {
  
-            if((await _roleManager.FindByNameAsync("User")) == null)
+            if((await _roleManager.FindByNameAsync("Player")) == null)
             {
-                await _roleManager.CreateAsync(new IdentityRole { Name = "User" });
+                await _roleManager.CreateAsync(new IdentityRole { Name = "Player" });
             }
             if ((await _roleManager.FindByNameAsync("Admin")) == null)
             {

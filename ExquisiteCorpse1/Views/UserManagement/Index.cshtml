@@ -1,11 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Identity;
-@using ExquisiteCorpse1.Models;
+@using ExquisiteCorpse1.Models
 @model ExquisiteCorpse1.ViewModels.UserManagementIndexViewModel
 @inject UserManager<ApplicationUser> userManager
-
 <table>
     <thead>
         <tr>
+            <th>Profile Name</th>
             <th>Email</th>
             <th>Roles</th>
             <th>Options</th>
@@ -15,7 +15,8 @@
         @foreach (var user in Model.Users)
         {
             <tr>
-                <td>@user.Email</td>
+                <td>@user.ProfileName</td>
+                <td>@user.UserName</td>
                 <td>@(string.Join(",", await userManager.GetRolesAsync(user)))</td>
                 <td><a asp-controller="UserManagement" asp-action="AddRole" asp-route-id="@user.Id">Add Role</a></td>
             </tr>

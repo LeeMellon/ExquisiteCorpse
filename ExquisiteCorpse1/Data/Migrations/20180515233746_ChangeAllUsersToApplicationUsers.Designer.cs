@@ -8,9 +8,10 @@ using ExquisiteCorpse1.Models;
 namespace ExquisiteCorpse1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180515233746_ChangeAllUsersToApplicationUsers")]
+    partial class ChangeAllUsersToApplicationUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
@@ -133,15 +134,17 @@ namespace ExquisiteCorpse1.Migrations
                     b.Property<int>("UserSectionId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<int>("SectionId");
 
                     b.Property<string>("UserId");
 
                     b.HasKey("UserSectionId");
 
-                    b.HasIndex("SectionId");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("SectionId");
 
                     b.ToTable("UsersSections");
                 });
@@ -272,7 +275,7 @@ namespace ExquisiteCorpse1.Migrations
                         .HasForeignKey("CorpseId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "User")
+                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("UserCorpses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -280,14 +283,14 @@ namespace ExquisiteCorpse1.Migrations
 
             modelBuilder.Entity("ExquisiteCorpse1.Models.UserSection", b =>
                 {
+                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("ExquisiteCorpse1.Models.Section", "Section")
                         .WithMany()
                         .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

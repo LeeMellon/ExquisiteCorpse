@@ -33,7 +33,7 @@ namespace ExquisiteCorpse1.Controllers
 
             var vm = new UserManagementIndexViewModel
             {
-                Users = _db.Users.OrderBy(u => u.ProfileName).Include(u => u.Roles).ToList()
+                Users = _db.ApplicationUsers.OrderBy(u => u.ProfileName).Include(u => u.Roles).ToList()
             };
 
             return View(vm);

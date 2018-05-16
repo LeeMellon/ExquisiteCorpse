@@ -13,7 +13,7 @@ namespace ExquisiteCorpse1.Models
         [Key]
         public int UserCorpseId { get; set; }
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
         public int CorpseId { get; set; }
         public Corpse Corpse { get; set; }

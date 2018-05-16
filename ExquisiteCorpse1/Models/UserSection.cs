@@ -14,7 +14,7 @@ namespace ExquisiteCorpse1.Models
         public int UserSectionId { get; set; }
 
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
         public int SectionId { get; set; }
         public Section Section { get; set; }

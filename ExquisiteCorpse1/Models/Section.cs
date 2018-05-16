@@ -16,7 +16,7 @@ namespace ExquisiteCorpse1.Models
         [ForeignKey("CorpseId")]
         public int CorpseId { get; set; }
         [ForeignKey("UserId")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string SectionText { get; set; }
         public string Stub { get; set; }
        

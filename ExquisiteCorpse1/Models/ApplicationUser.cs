@@ -1,24 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using ExquisiteCorpse1.Models;
 
 namespace ExquisiteCorpse1.Models
 {
-    [Table("Users")]
+    [Table("ApplicationUsers")]
     public class ApplicationUser : IdentityUser
     {
-        [Key]
-        public string UserId { get; set; }
+ 
         public string ProfileName { get; set; }
         public string Role { get; set; }
-        public string Name { get; set; }
         public virtual List<Section> Sections { get; set; }
         public virtual List<UserCorpse> UserCorpses { get; set; }
+
 
         public override bool Equals(System.Object otherApplicationUser)
         {
@@ -29,13 +23,13 @@ namespace ExquisiteCorpse1.Models
             else
             {
                 ApplicationUser newApplicationUser = (ApplicationUser)otherApplicationUser;
-                return this.UserId.Equals(newApplicationUser.UserId);
+                return this.Id.Equals(newApplicationUser.Id);
             }
         }
 
         public override int GetHashCode()
         {
-            return this.UserId.GetHashCode();
+            return this.Id.GetHashCode();
         }
     }
 }

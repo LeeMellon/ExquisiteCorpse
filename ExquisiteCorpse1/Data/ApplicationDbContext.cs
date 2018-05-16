@@ -44,7 +44,7 @@ namespace ExquisiteCorpse1.Models
             builder.Entity<UserCorpse>()
                 .HasKey(p => new { p.UserId, p.CorpseId });
             builder.Entity<UserCorpse>()
-                .HasOne(uc => uc.User)
+                .HasOne(uc => uc.ApplicationUser)
                 .WithMany(u => u.UserCorpses)
                 .HasForeignKey(uc => uc.UserId);
             builder.Entity<UserCorpse>()
