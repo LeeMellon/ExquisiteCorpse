@@ -15,6 +15,7 @@ namespace ExquisiteCorpse1.Models
         public int SectionId { get; set; }
         [ForeignKey("CorpseId")]
         public int CorpseId { get; set; }
+        public virtual Corpse Corpse { get; set; }
         [ForeignKey("UserId")]
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
@@ -27,6 +28,19 @@ namespace ExquisiteCorpse1.Models
         public string GetProfileName()
         {
             return User.ProfileName;
+        }
+
+        public string GetPreviousStub()
+        {
+            var sectionCount = Corpse.Sections.Count;
+            if(sectionCount > 0)
+            {
+                return Corpse.Sections[sectionCount - 1].Stub;
+            }
+            else
+            {
+                return "Begin You Story Now";
+            }
         }
 
     }
