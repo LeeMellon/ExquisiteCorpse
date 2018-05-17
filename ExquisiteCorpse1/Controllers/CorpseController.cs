@@ -34,6 +34,7 @@ namespace ExquisiteCorpse1.Controllers
 
         public async Task<IActionResult> CreateAsync()
         {
+
             var thisUser = await _userManager.GetUserAsync(HttpContext.User);
             var users = _db.ApplicationUsers.ToList();
             foreach(ApplicationUser user in users)
@@ -48,8 +49,41 @@ namespace ExquisiteCorpse1.Controllers
         [HttpPost]
         public IActionResult Create(Corpse corpse)
         {
-            
-            return View();
+            var friends = Request.Form["friends"].ToList(); ;
+            List<ApplicationUser> friendsList = new List<ApplicationUser> { };
+            foreach(String id in friends)
+            {
+                var thisFriend = _db.ApplicationUsers.FirstOrDefault(au => au.Id == id);
+                friendsList.Add(thisFriend);
+            }
+            corpse.Players = friendsList;
+            _db.Corpses.Add(corpse);
+            _db.SaveChanges();
+            return RedirectToAction("Index", "Account");
+        }
+        
+        public IActionResult Edit(int id)
+        {
+            var thisCorpse = _db.Corpses.FirstOrDefault(c => c.CorpseId == id);
+            return View(GetCorpseEditViewModel(thisCorpse));
+        }
+
+        private CorpseEditViewModel GetCorpseEditViewModel(Corpse corpse)
+        {
+            List<string> profileNames = new List<string> { };
+            List<string> stubs = new List<string> { };
+            var sections = corpse.Sections.ToList();
+            foreach (Section s in sections)
+            {
+                stubs.Add(s.Stub);
+                var thisId = s.UserId;
+                profileNames.Add(s.GetProfileName());
+            }
+            var cevm = new CorpseEditViewModel();
+            cevm.Corpse = corpse;
+            cevm.ProfileNames = profileNames;
+            cevm.Stubs = stubs;
+            return (cevm);
         }
     }
 }

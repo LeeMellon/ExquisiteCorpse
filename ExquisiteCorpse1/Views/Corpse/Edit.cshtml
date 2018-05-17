@@ -1,5 +1,16 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model ExquisiteCorpse1.ViewModels.CorpseEditViewModel
+
+<h2>Edit @Model.Corpse.Title </h2>
+
+<lable>Id</lable>
+@Html.EditorFor(model => model.Corpse.CorpseId)
+<lable>Title</lable>
+@Html.EditorFor(model => model.Corpse.Title)
+<lable>Players</lable>
+@Html.TextAreaFor(model => model.PlayerNames) @*makeTextArea?*@
+<lable>Rounds</lable>
+@Html.EditorFor(model => model.Corpse.Rounds)
+<lable>Current Round</lable>
+@Html.EditorFor(model => model.Corpse.CurrentRound)
+<lable>Sections</lable>
+@Html.TextAreaFor(model => model.Stubs) @*makeTextArea?*@

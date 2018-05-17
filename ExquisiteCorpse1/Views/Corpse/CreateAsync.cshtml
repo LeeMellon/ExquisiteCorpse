@@ -1,0 +1,17 @@
+﻿@model ExquisiteCorpse1.Models.Corpse
+@using ExquisiteCorpse1.Models
+
+<h3> Create a new corpse</h3>
+<form asp-controller="Corpse" asp-action="Create">
+    <input value=@ViewBag.thisUser.ProfileName type="text"/>
+    @for (int i = 0; i < @ViewBag.thisUser.Friends.Count; i++)
+    {
+  
+<input value="@ViewBag.thisUser.Friends[i].Id" type="checkbox" name="friends"/>
+<label value="@ViewBag.thisUser.Friends[i].ProfileName">@ViewBag.thisUser.Friends[i].ProfileName</label>
+}
+    <input asp-for="@Model.Rounds" type="number" />
+    <input type="submit" value="Add Role" />
+</form>
+
+
