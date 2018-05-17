@@ -17,12 +17,17 @@ namespace ExquisiteCorpse1.Models
         public int CorpseId { get; set; }
         [ForeignKey("UserId")]
         public string UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public string SectionText { get; set; }
         public string Stub { get; set; }
        
         
         public Section() { }
 
+        public string GetProfileName()
+        {
+            return User.ProfileName;
+        }
 
     }
 

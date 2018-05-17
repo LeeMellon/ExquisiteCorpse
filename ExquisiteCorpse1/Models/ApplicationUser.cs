@@ -7,12 +7,16 @@ namespace ExquisiteCorpse1.Models
     [Table("ApplicationUsers")]
     public class ApplicationUser : IdentityUser
     {
- 
+       
         public string ProfileName { get; set; }
         public virtual List<Section> Sections { get; set; }
         public virtual List<UserCorpse> UserCorpses { get; set; }
         public virtual List<ApplicationUser> Friends { get; set; }
 
+        public ApplicationUser()
+        {
+            Friends = new List<ApplicationUser> { };
+        }
         public override bool Equals(System.Object otherApplicationUser)
         {
             if (!(otherApplicationUser is ApplicationUser))
