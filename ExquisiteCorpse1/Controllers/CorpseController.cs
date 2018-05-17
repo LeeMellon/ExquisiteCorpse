@@ -70,19 +70,21 @@ namespace ExquisiteCorpse1.Controllers
 
         private CorpseEditViewModel GetCorpseEditViewModel(Corpse corpse)
         {
-            List<string> profileNames = new List<string> { };
+            List<string> playerNames = new List<string> { };
             List<string> stubs = new List<string> { };
             var sections = corpse.Sections.ToList();
             foreach (Section s in sections)
             {
                 stubs.Add(s.Stub);
                 var thisId = s.UserId;
-                profileNames.Add(s.GetProfileName());
+                playerNames.Add(s.GetProfileName());
             }
-            var cevm = new CorpseEditViewModel();
-            cevm.Corpse = corpse;
-            cevm.ProfileNames = profileNames;
-            cevm.Stubs = stubs;
+            var cevm = new CorpseEditViewModel
+            {
+                Corpse = corpse,
+                PlayerNames = playerNames,
+                Stubs = stubs
+            };
             return (cevm);
         }
     }

@@ -29,7 +29,8 @@ namespace ExquisiteCorpse1.Models
 
        public void EndGame()
         {
-            
+            //var playerNumbers = 
+            //new TextMessage completionMessage = new TextMessage { }
         }
 
        public void Increment()

@@ -17,7 +17,7 @@ namespace ExquisiteCorpse1.Models
         public string Body { get; set; }
         public string Status { get; set; }
 
-        public TextMessage( )
+        public TextMessage()
         {
             From = "+15416251981";
         }

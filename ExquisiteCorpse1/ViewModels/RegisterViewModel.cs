@@ -19,6 +19,11 @@ namespace ExquisiteCorpse1.ViewModels
         public string Email { get; set; }
 
         [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name ="Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

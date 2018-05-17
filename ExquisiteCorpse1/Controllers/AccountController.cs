@@ -37,7 +37,7 @@ namespace MoneyMinder.Net.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var user = new ApplicationUser { UserName = model.Email, ProfileName = model.ProfileName };
+            var user = new ApplicationUser { UserName = model.Email, ProfileName = model.ProfileName, PhoneNumber = model.PhoneNumber};
             if (ModelState.IsValid)
             {
                 IdentityResult result = await _userManager.CreateAsync(user, model.Password);

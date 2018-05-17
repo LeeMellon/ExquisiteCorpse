@@ -10,6 +10,6 @@ namespace ExquisiteCorpse1.ViewModels
     {
         public List<string> Stubs { get; set; }
         public Corpse Corpse { get; set; }
-        public List<string> ProfileNames { get; set; }
+        public List<string> PlayerNames { get; set; }
     }
 }
