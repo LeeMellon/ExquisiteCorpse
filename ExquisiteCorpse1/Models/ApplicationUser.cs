@@ -12,6 +12,7 @@ namespace ExquisiteCorpse1.Models
         public virtual List<Section> Sections { get; set; }
         public virtual List<UserCorpse> UserCorpses { get; set; }
         public virtual List<ApplicationUser> Friends { get; set; }
+        
 
         public ApplicationUser()
         {

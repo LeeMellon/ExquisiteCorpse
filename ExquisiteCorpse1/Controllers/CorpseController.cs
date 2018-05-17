@@ -36,7 +36,7 @@ namespace ExquisiteCorpse1.Controllers
         {
 
             var thisUser = await _userManager.GetUserAsync(HttpContext.User);
-            var users = _db.ApplicationUsers.ToList();
+            var users = _db.ApplicationUsers.Where(au => au.Id != thisUser.Id).ToList();
             foreach(ApplicationUser user in users)
             {
                 thisUser.AddFriend(user);
@@ -47,18 +47,21 @@ namespace ExquisiteCorpse1.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Corpse corpse)
+        public async Task<IActionResult> Create(Corpse corpse)
         {
-            var friends = Request.Form["friends"].ToList(); ;
             List<ApplicationUser> friendsList = new List<ApplicationUser> { };
+            friendsList.Add(await _userManager.GetUserAsync(HttpContext.User));
+            var friends = Request.Form["friends"].ToList(); ;
             foreach(String id in friends)
             {
                 var thisFriend = _db.ApplicationUsers.FirstOrDefault(au => au.Id == id);
                 friendsList.Add(thisFriend);
             }
+            corpse.Status = "Awaiting";
             corpse.Players = friendsList;
             _db.Corpses.Add(corpse);
             _db.SaveChanges();
+            corpse.SendInvite();
             return RedirectToAction("Index", "Account");
         }
         

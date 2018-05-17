@@ -23,7 +23,7 @@ namespace ExquisiteCorpse1.Models
         public string Status { get; set; } //make Enum?
 
 
-       public Corpse(int currentRound = 0, int currrentPlayerIndex =0) { }
+       //public Corpse(int currentRound = 0, int currrentPlayerIndex =0) { }
 
         public string GetLastStub()
         {

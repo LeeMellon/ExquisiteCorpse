@@ -8,9 +8,10 @@ using ExquisiteCorpse1.Models;
 namespace ExquisiteCorpse1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180517050554_AddStatusAndCurrentPlayerIndex")]
+    partial class AddStatusAndCurrentPlayerIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
