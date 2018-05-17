@@ -46,7 +46,7 @@ namespace ExquisiteCorpse1.Models
             var invitePlayers = Players.ToList().Skip(1);
             foreach(ApplicationUser player in invitePlayers)
             {
-                var body = Players[0].ProfileName + "has invited you to make a corpse";
+                var body = Players[0].ProfileName + " has invited you to make a corpse INSERTURLHERE";
                 var to = "+1" + player.PhoneNumber;
                 new TextMessage { To = to, Body = body }.Send();
             }

@@ -1,0 +1,38 @@
+﻿<head>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $('.corpse-display').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("DisplayAllView")', //Write this view
+                success: function (result) {
+                    $('#corpse-all-view').html(result);
+
+                }
+            });
+        });
+
+
+
+    });
+
+
+    </script>
+</head>
+<body>
+
+
+    <h1 class="corpse-display">All Your Corpses</h1>
+    <div id="corpse-all-view"></div>
+    <h1 class="corpse-turn">It's Your Turn</h1>
+    <div id="corpse-turn-view"></div>
+    <h1 class="corpse-complete">Completed Corpses</h1>
+    <div id="corpse-complete-view"></div>
+
+
+
+</body>
+</html>

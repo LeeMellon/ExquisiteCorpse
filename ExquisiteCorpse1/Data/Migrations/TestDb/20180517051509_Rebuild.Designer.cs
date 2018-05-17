@@ -8,8 +8,8 @@ using ExquisiteCorpse1.Data.Tests.Models;
 namespace ExquisiteCorpse1.Migrations.TestDb
 {
     [DbContext(typeof(TestDbContext))]
-    [Migration("20180514195807_BuilderAndUserCorpseToCorpse")]
-    partial class BuilderAndUserCorpseToCorpse
+    [Migration("20180517051509_Rebuild")]
+    partial class Rebuild
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,8 +23,12 @@ namespace ExquisiteCorpse1.Migrations.TestDb
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<int?>("CorpseId");
 
                     b.Property<string>("Email")
                         .HasMaxLength(127);
@@ -34,8 +38,6 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("Name");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(127);
@@ -51,18 +53,18 @@ namespace ExquisiteCorpse1.Migrations.TestDb
 
                     b.Property<string>("ProfileName");
 
-                    b.Property<string>("Role");
-
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserId");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(127);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CorpseId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -79,9 +81,15 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                     b.Property<int>("CorpseId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CurrentPlayerIndex");
+
                     b.Property<int>("CurrentRound");
 
                     b.Property<int>("Rounds");
+
+                    b.Property<string>("Status");
+
+                    b.Property<string>("Title");
 
                     b.HasKey("CorpseId");
 
@@ -93,21 +101,19 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                     b.Property<int>("SectionId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<int>("CorpseId");
 
                     b.Property<string>("SectionText");
 
                     b.Property<string>("Stub");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("SectionId");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("CorpseId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Sections");
                 });
@@ -134,15 +140,17 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                     b.Property<int>("UserSectionId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<int>("SectionId");
 
                     b.Property<string>("UserId");
 
                     b.HasKey("UserSectionId");
 
-                    b.HasIndex("SectionId");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("SectionId");
 
                     b.ToTable("UsersSections");
                 });
@@ -254,15 +262,26 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ExquisiteCorpse1.Models.Section", b =>
+            modelBuilder.Entity("ExquisiteCorpse1.Models.ApplicationUser", b =>
                 {
                     b.HasOne("ExquisiteCorpse1.Models.ApplicationUser")
-                        .WithMany("Sections")
+                        .WithMany("Friends")
                         .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("ExquisiteCorpse1.Models.Corpse")
+                        .WithMany("Players")
+                        .HasForeignKey("CorpseId");
+                });
+
+            modelBuilder.Entity("ExquisiteCorpse1.Models.Section", b =>
+                {
+                    b.HasOne("ExquisiteCorpse1.Models.Corpse", "Corpse")
                         .WithMany("Sections")
                         .HasForeignKey("CorpseId");
+
+                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "User")
+                        .WithMany("Sections")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ExquisiteCorpse1.Models.UserCorpse", b =>
@@ -271,20 +290,20 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                         .WithMany("UserCorpses")
                         .HasForeignKey("CorpseId");
 
-                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "User")
+                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("UserCorpses")
                         .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ExquisiteCorpse1.Models.UserSection", b =>
                 {
+                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("ExquisiteCorpse1.Models.Section", "Section")
                         .WithMany()
                         .HasForeignKey("SectionId");
-
-                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

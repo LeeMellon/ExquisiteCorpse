@@ -22,8 +22,12 @@ namespace ExquisiteCorpse1.Migrations.TestDb
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<int?>("CorpseId");
 
                     b.Property<string>("Email")
                         .HasMaxLength(127);
@@ -33,8 +37,6 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("Name");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(127);
@@ -50,18 +52,18 @@ namespace ExquisiteCorpse1.Migrations.TestDb
 
                     b.Property<string>("ProfileName");
 
-                    b.Property<string>("Role");
-
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserId");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(127);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CorpseId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -78,9 +80,15 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                     b.Property<int>("CorpseId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CurrentPlayerIndex");
+
                     b.Property<int>("CurrentRound");
 
                     b.Property<int>("Rounds");
+
+                    b.Property<string>("Status");
+
+                    b.Property<string>("Title");
 
                     b.HasKey("CorpseId");
 
@@ -92,21 +100,19 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                     b.Property<int>("SectionId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<int>("CorpseId");
 
                     b.Property<string>("SectionText");
 
                     b.Property<string>("Stub");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("SectionId");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("CorpseId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Sections");
                 });
@@ -255,15 +261,26 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ExquisiteCorpse1.Models.Section", b =>
+            modelBuilder.Entity("ExquisiteCorpse1.Models.ApplicationUser", b =>
                 {
                     b.HasOne("ExquisiteCorpse1.Models.ApplicationUser")
-                        .WithMany("Sections")
+                        .WithMany("Friends")
                         .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("ExquisiteCorpse1.Models.Corpse")
+                        .WithMany("Players")
+                        .HasForeignKey("CorpseId");
+                });
+
+            modelBuilder.Entity("ExquisiteCorpse1.Models.Section", b =>
+                {
+                    b.HasOne("ExquisiteCorpse1.Models.Corpse", "Corpse")
                         .WithMany("Sections")
                         .HasForeignKey("CorpseId");
+
+                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "User")
+                        .WithMany("Sections")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ExquisiteCorpse1.Models.UserCorpse", b =>

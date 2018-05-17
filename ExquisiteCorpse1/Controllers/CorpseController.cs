@@ -57,6 +57,7 @@ namespace ExquisiteCorpse1.Controllers
                 var thisFriend = _db.ApplicationUsers.FirstOrDefault(au => au.Id == id);
                 friendsList.Add(thisFriend);
             }
+            corpse.Title = Request.Form["title"] + "'s Corpse";
             corpse.Status = "Awaiting";
             corpse.Players = friendsList;
             _db.Corpses.Add(corpse);

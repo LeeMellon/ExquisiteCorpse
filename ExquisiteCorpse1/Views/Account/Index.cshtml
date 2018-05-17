@@ -2,8 +2,9 @@
 
 <h2>Authentication with Identity</h2>
 <hr />
-@if (User.Identity.IsAuthenticated)
+@if (User.Identity.IsAuthenticated) 
 {
+            @*Reroute to User's Index Page*@
     <p>Hello @User.Identity.Name!</p>
     @using (Html.BeginForm("LogOff", "Account"))
     {
