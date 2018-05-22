@@ -7,7 +7,7 @@
         $('.corpse-display-all').click(function () {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("DisplayAllView", "Corpse", "All")', //All corpses
+                url: '@Url.Action("DisplayAllView", "Corpse",  "All")', //All corpses
                 success: function (result) {
                     $('#corpse-all-view').html(result);
 
@@ -69,19 +69,19 @@
 <body>
 
 
-    <h1 class="corpse-display-all">All Your Corpses</h1>
+    <h3 class="corpse-display-all">All Your Corpses</h3>
     <div id="corpse-all-view"></div>
 
-    <h1 class="corpse-awaiting-all">All Your Corpses</h1>
+    <h3 class="corpse-awaiting-all">Corpses Awaitng Friend Acceptance</h3>
     <div id="corpse-awaiting-view"></div>
 
-    <h1 class="corpse-waiting-all">All Your Corpses</h1>
+    <h3 class="corpse-waiting-all">Corpses Waiting For a Player's Turn</h3>
     <div id="corpse-waiting-view"></div>
 
-    <h1 class="corpse-display-turn">It's Your Turn</h1>
+    <h3 class="corpse-display-turn">It's Your Turn</h3>
     <div id="corpse-turn-view"></div>
 
-    <h1 class="corpse-complete">Completed Corpses</h1>
+    <h3 class="corpse-complete">Completed Corpses</h3>
     <div id="corpse-complete-view"></div>
 
 
