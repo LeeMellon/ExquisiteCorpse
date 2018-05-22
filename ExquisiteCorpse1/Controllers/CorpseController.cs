@@ -131,6 +131,7 @@ namespace ExquisiteCorpse1.Controllers
             List<string> playerNames = new List<string> { };
             List<string> stubs = new List<string> { };
             var sections = corpse.Sections.ToList();
+
             foreach (Section s in sections)
             {
                 stubs.Add(s.Stub);

@@ -20,7 +20,7 @@ namespace ExquisiteCorpse1.Models
         public int CurrentRound { get; set; }
         public int CurrentPlayerIndex { get; set; }
         public List<UserCorpse> UserCorpses { get; set; }
-        public string Status { get; set; } //Complete, Turn, Waiting, Awaitng, make Enum?
+        public string Status { get; set; } //Complete, Active, Awaitng, make Enum?
 
 
        //public Corpse(int currentRound = 0, int currrentPlayerIndex =0) { }
@@ -29,6 +29,11 @@ namespace ExquisiteCorpse1.Models
         {
 
             return Sections[Sections.Count - 1].Stub;
+        }
+
+        public string GetCurrentPlayerId()
+        {
+            return Players[CurrentPlayerIndex].Id;
         }
 
        public string GetLastPlayerName()
