@@ -32,6 +32,60 @@ namespace ExquisiteCorpse1.Controllers
             return View();
         }
 
+        public async Task<IActionResult> DisplayAllView(string viewOption)
+        {
+            var thisUser = await _userManager.GetUserAsync(HttpContext.User);
+            var thisList = _db.Corpses.Select(c => c.Players.Where(p => p.Id == thisUser.Id)).ToList();
+            if (viewOption == "All")
+            {
+                
+                return RedirectToAction("ApplicationUser", "DisplayAllView", thisList);
+
+            }
+            else
+            {
+                List<Corpse> thisModel = new List<Corpse>{ };
+                foreach(Corpse c in thisList)
+                {
+                    if(viewOption == "Turn")
+                    {
+                        if(c.GetCurrentPlayerId() == thisUser.Id)
+                        {
+                            thisModel.Add(c);
+                        }
+                        
+                    }
+                    else if (viewOption == "Awaiting")
+                    {
+                        if (c.Status == "Awaiting")
+                        {
+                            thisModel.Add(c);
+                        }
+                        
+                    }
+                    else if (viewOption == "Waiting")
+                    {
+                        if ((c.Status == "Active") && (c.GetCurrentPlayerId() != thisUser.Id))
+                        {
+                            thisModel.Add(c);
+                        }
+
+                                           }
+                    else if(viewOption == "Complete")
+                    {
+                        if (c.Status == "Complete")
+                        {
+                            thisModel.Add(c);
+                        }
+
+                    }
+                }
+
+                return RedirectToAction("ApplicationUser", "DisplayAllView", thisModel);
+
+            }
+        }
+
         public async Task<IActionResult> CreateAsync()
         {
 
@@ -91,5 +145,6 @@ namespace ExquisiteCorpse1.Controllers
             };
             return (cevm);
         }
+
     }
 }
