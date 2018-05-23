@@ -123,6 +123,8 @@ namespace ExquisiteCorpse1.Migrations.TestDb
 
                     b.Property<int>("CorpseId");
 
+                    b.Property<string>("Status");
+
                     b.Property<int>("UserCorpseId");
 
                     b.HasKey("UserId", "CorpseId");
