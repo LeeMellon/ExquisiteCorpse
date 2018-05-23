@@ -20,6 +20,7 @@ namespace ExquisiteCorpse1.Models.Repositories
         }
 
         public IQueryable<Section> Sections { get { return db.Sections; } }
+        public IQueryable<ApplicationUser> Players { get { return db.ApplicationUsers; } }
 
         public Corpse Edit(Corpse corpse)
         {

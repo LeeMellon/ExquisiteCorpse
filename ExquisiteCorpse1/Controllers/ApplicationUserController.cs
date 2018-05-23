@@ -34,8 +34,15 @@ namespace ExquisiteCorpse1.Controllers
 
         public async Task<IActionResult> DisplayAllView(string viewOption)
         {
+            if (viewOption == null)
+            {
+                throw new ArgumentNullException(nameof(viewOption));
+            }
+
+         
             var thisUser = await _userManager.GetUserAsync(HttpContext.User);
-            var thisList = _db.Corpses.Select(c => c.Players.Where(p => p.Id == thisUser.Id)).ToList();
+            var thisList = _db.Corpses.Select(c => c.Players.Where(p => p.Id == thisUser.Id)).ToList(); //
+            //var thisList = _db.Corpses.I
             if (viewOption == "All")
             {
 

@@ -8,6 +8,7 @@ namespace ExquisiteCorpse1.Models.Repositories
     interface ICorpseRepository
     {
         IQueryable<Section> Sections { get; }
+        IQueryable<ApplicationUser> Players { get; }
         Corpse Save(Corpse corpse);
         Corpse Edit(Corpse corpse);
         void Remove(Corpse corpse);

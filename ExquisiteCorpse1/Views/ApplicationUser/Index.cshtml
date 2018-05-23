@@ -7,7 +7,7 @@
         $('.corpse-display-all').click(function () {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("DisplayAllView", "Corpse",  "All")', //All corpses
+                url: '@Url.Action("DisplayAllView", "ApplicationUser",  "All")', //All corpses
                 success: function (result) {
                     $('#corpse-all-view').html(result);
 
@@ -18,7 +18,7 @@
          $('.corpse-display-turn').click(function () {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("DisplayAllView", "Corpse", "Turn")', //Waiting for you
+                url: '@Url.Action("DisplayAllView", "ApplicationUser", "Turn")', //Waiting for you
                 success: function (result) {
                     $('#corpse-turn-view').html(result);
 
@@ -27,9 +27,10 @@
         });
 
          $('.corpse-display-awaiting').click(function () {
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("DisplayAllView", "Corpse", "Awaiting")', //Waiting for accepteance 
+             $.ajax({
+                 type: 'GET',
+                 url: '@Url.Action("DisplayAllView", "ApplicationUser")', //Waiting for accepteance 
+                 data: { viewOption : "Awaiting" },
                 success: function (result) {
                     $('#corpse-awaiting-view').html(result);
 
@@ -41,7 +42,7 @@
          $('.corpse-display-waiting').click(function () {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("DisplayAllView", "Corpse", "Waiting")', //Waiting for someone else
+                url: '@Url.Action("DisplayAllView", "ApplicationUser", "Waiting")', //Waiting for someone else
                 success: function (result) {
                     $('#corpse-waiting-view').html(result);
 
@@ -53,7 +54,7 @@
          $('.corpse-display-complete').click(function () {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("DisplayAllView", "Corpse", "Complete")', //Completed
+                url: '@Url.Action("DisplayAllView", "ApplicationUser", "Complete")', //Completed
                 success: function (result) {
                     $('#corpse-complete-view').html(result);
 
@@ -72,19 +73,21 @@
     <h3 class="corpse-display-all">All Your Corpses</h3>
     <div id="corpse-all-view"></div>
 
-    <h3 class="corpse-awaiting-all">Corpses Awaitng Friend Acceptance</h3>
+    <h3 class="corpse-display-awaiting">Corpses Awaitng Friend Acceptance</h3>
     <div id="corpse-awaiting-view"></div>
 
-    <h3 class="corpse-waiting-all">Corpses Waiting For a Player's Turn</h3>
+    <h3 class="corpse-duisplay-waiting">Corpses Waiting For a Player's Turn</h3>
     <div id="corpse-waiting-view"></div>
 
     <h3 class="corpse-display-turn">It's Your Turn</h3>
     <div id="corpse-turn-view"></div>
 
-    <h3 class="corpse-complete">Completed Corpses</h3>
+    <h3 class="corpse-diaplay-complete">Completed Corpses</h3>
     <div id="corpse-complete-view"></div>
 
+    <div>
+        @Html.ActionLink("Create New Corpse", "CreateAsync", "Corpse")
+    </div>
 
 
 </body>
-</html>

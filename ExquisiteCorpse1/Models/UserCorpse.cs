@@ -17,5 +17,7 @@ namespace ExquisiteCorpse1.Models
 
         public int CorpseId { get; set; }
         public Corpse Corpse { get; set; }
+
+        public string Status { get; set; }
     }
 }

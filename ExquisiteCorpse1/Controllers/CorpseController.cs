@@ -65,7 +65,7 @@ namespace ExquisiteCorpse1.Controllers
             _db.Corpses.Add(corpse);
             _db.SaveChanges();
             corpse.SendInvite();
-            return RedirectToAction("Index", "Account");
+            return RedirectToAction("Index", "ApplicationUser");
         }
         
         public IActionResult Edit(int id)
