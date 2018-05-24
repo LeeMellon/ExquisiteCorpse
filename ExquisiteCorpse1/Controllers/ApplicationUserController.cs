@@ -6,6 +6,7 @@ using ExquisiteCorpse1.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -42,7 +43,6 @@ namespace ExquisiteCorpse1.Controllers
          
             var thisUser = await _userManager.GetUserAsync(HttpContext.User);
             var thisList = _db.Corpses.Select(c => c.Players.Where(p => p.Id == thisUser.Id)).ToList(); //
-            //var thisList = _db.Corpses.I
             if (viewOption == "All")
             {
 

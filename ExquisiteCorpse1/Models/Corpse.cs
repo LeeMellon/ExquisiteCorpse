@@ -57,6 +57,18 @@ namespace ExquisiteCorpse1.Models
             }
         }
 
+        public UserCorpse MakeJoin(ApplicationUser user)
+        {
+            return new UserCorpse
+            {
+                Corpse = this,
+                CorpseId = this.CorpseId,
+                ApplicationUser = user,
+                UserId = user.Id,
+                Status = "Awaiting"
+            };
+        }
+
        public void NextTurn()
         {
 

@@ -38,7 +38,7 @@ namespace ExquisiteCorpse1.Controllers
         {
 
             var thisUser = await _userManager.GetUserAsync(HttpContext.User);
-            var users = _db.ApplicationUsers.Where(au => au.Id != thisUser.Id).ToList();
+            var users = _db.ApplicationUsers.Where(au => au.Id != thisUser.Id).ToList();//setup for testing. Remove from here and add to some ADD Frineds view.
             foreach(ApplicationUser user in users)
             {
                 thisUser.AddFriend(user);
@@ -52,18 +52,27 @@ namespace ExquisiteCorpse1.Controllers
         public async Task<IActionResult> Create(Corpse corpse)
         {
             List<ApplicationUser> friendsList = new List<ApplicationUser> { };
-            friendsList.Add(await _userManager.GetUserAsync(HttpContext.User));
+            var thisUser = await _userManager.GetUserAsync(HttpContext.User);
+            friendsList.Add(thisUser);
             var friends = Request.Form["friends"].ToList(); ;
             foreach(String id in friends)
             {
                 var thisFriend = _db.ApplicationUsers.FirstOrDefault(au => au.Id == id);
                 friendsList.Add(thisFriend);
+                               
             }
             corpse.Title = Request.Form["title"] + "'s Corpse";
             corpse.Status = "Awaiting";
             corpse.Players = friendsList;
+
             _db.Corpses.Add(corpse);
             _db.SaveChanges();
+            foreach(ApplicationUser f in friendsList)
+            {
+                var newUC = corpse.MakeJoin(f);
+                _db.UserCorpses.Add(newUC);
+                _db.SaveChanges();
+            }
             corpse.SendInvite();
             return RedirectToAction("Index", "ApplicationUser");
         }

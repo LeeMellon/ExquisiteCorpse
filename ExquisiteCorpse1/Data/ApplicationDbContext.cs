@@ -41,16 +41,16 @@ namespace ExquisiteCorpse1.Models
             builder.Entity<IdentityRole>(entity => {
                 entity.Property(m => m.Name).HasMaxLength(127); entity.Property(m => m.NormalizedName).HasMaxLength(127);
             });
-            builder.Entity<UserCorpse>()
-                .HasKey(p => new { p.UserId, p.CorpseId });
-            builder.Entity<UserCorpse>()
-                .HasOne(uc => uc.ApplicationUser)
-                .WithMany(u => u.UserCorpses)
-                .HasForeignKey(uc => uc.UserId);
-            builder.Entity<UserCorpse>()
-                .HasOne(uc => uc.Corpse)
-                .WithMany(c => c.UserCorpses)
-                .HasForeignKey(uc => uc.CorpseId);
+            //builder.Entity<UserCorpse>()
+            //    .HasKey(p => new { p.UserId, p.CorpseId });
+            //builder.Entity<UserCorpse>()
+            //    .HasOne(uc => uc.ApplicationUser)
+            //    .WithMany(u => u.UserCorpses)
+            //    .HasForeignKey(uc => uc.UserId);
+            //builder.Entity<UserCorpse>()
+            //    .HasOne(uc => uc.Corpse)
+            //    .WithMany(c => c.UserCorpses)
+            //    .HasForeignKey(uc => uc.CorpseId);
 
         }
     }

@@ -19,5 +19,7 @@ namespace ExquisiteCorpse1.Models
         public Corpse Corpse { get; set; }
 
         public string Status { get; set; }
+
+        //Need Medthod to Generate New UCs Needs to be in COrpse Model?
     }
 }

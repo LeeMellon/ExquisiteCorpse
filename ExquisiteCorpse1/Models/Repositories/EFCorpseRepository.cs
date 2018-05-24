@@ -20,7 +20,7 @@ namespace ExquisiteCorpse1.Models.Repositories
         }
 
         public IQueryable<Section> Sections { get { return db.Sections; } }
-        public IQueryable<ApplicationUser> Players { get { return db.ApplicationUsers; } }
+        public IQueryable<ApplicationUser> Players { get { return db.ApplicationUsers; } } //DO I want this here?
 
         public Corpse Edit(Corpse corpse)
         {
