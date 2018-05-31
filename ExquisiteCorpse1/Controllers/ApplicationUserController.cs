@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExquisiteCorpse1.Models;
+using ExquisiteCorpse1.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,7 @@ namespace ExquisiteCorpse1.Controllers
             return View();
         }
 
+
         public async Task<IActionResult> DisplayAllView(string viewOption)
         {
             if (viewOption == null)
@@ -40,57 +42,71 @@ namespace ExquisiteCorpse1.Controllers
                 throw new ArgumentNullException(nameof(viewOption));
             }
 
-         
+
             var thisUser = await _userManager.GetUserAsync(HttpContext.User);
-            var thisList = _db.Corpses.Select(c => c.Players.Where(p => p.Id == thisUser.Id)).ToList(); //
-            if (viewOption == "All")
+            List<CorpseDisplayAllViewModel> corpseList = new List<CorpseDisplayAllViewModel> { };
+            var thisList = _db.UserCorpses.Where(uc => uc.UserId == thisUser.Id).Select(uc => uc.CorpseId).ToList();
+            foreach(int id in thisList)
             {
-
-                return RedirectToAction("ApplicationUser", "DisplayAllView", thisList);
+            var testEms = _db.Corpses.Include(c => c.Players).FirstOrDefault(c => c.CorpseId == id);
 
             }
-            else
-            {
-                List<Corpse> thisModel = new List<Corpse> { };
-                foreach (Corpse c in thisList)
-                {
-                    if (viewOption == "Turn")
-                    {
-                        if (c.GetCurrentPlayerId() == thisUser.Id)
-                        {
-                            thisModel.Add(c);
-                        }
+            //        if (viewOption == "All")
+            //        {
+            //            foreach (Corpse c in thisList)
+            //            {
+            //                corpseList.Add(new CorpseDisplayAllViewModel { Corpse = c });
+            //            }
 
-                    }
-                    else if (viewOption == "Awaiting")
-                    {
-                        if (c.Status == "Awaiting")
-                        {
-                            thisModel.Add(c);
-                        }
+            return View(corpseList);
 
-                    }
-                    else if (viewOption == "Waiting")
-                    {
-                        if ((c.Status == "Active") && (c.GetCurrentPlayerId() != thisUser.Id))
-                        {
-                            thisModel.Add(c);
-                        }
+            //        }
+            //        else
+            //        {
+            //            List<Corpse> thisModel = new List<Corpse> { };
+            //            var testr = viewOption;
+            //            var listetst = thisList;
+            //            foreach (Corpse c in thisList)
+            //            {
+            //                var test = viewOption;
 
-                    }
-                    else if (viewOption == "Complete")
-                    {
-                        if (c.Status == "Complete")
-                        {
-                            thisModel.Add(c);
-                        }
+            //                if (viewOption == "Turn")
+            //                {
+            //                    if (c.GetCurrentPlayerId() == thisUser.Id)
+            //                    {
+            //                        thisModel.Add(c);
+            //                    }
 
-                    }
-                }
+            //                }
+            //                else if (viewOption == "Awaiting")
+            //                {
+            //                    if (c.Status == "Awaiting")
+            //                    {
+            //                        thisModel.Add(c);
+            //                    }
 
-                return RedirectToAction("DisplayAllView", thisModel);
+            //                }
+            //                else if (viewOption == "Waiting")
+            //                {
+            //                    if ((c.Status == "Active") && (c.GetCurrentPlayerId() != thisUser.Id))
+            //                    {
+            //                        thisModel.Add(c);
+            //                    }
 
-            }
+            //                }
+            //                else if (viewOption == "Complete")
+            //                {
+            //                    if (c.Status == "Complete")
+            //                    {
+            //                        thisModel.Add(c);
+            //                    }
+
+            //                }
+            //            }
+
+            //            return View(thisModel);
+
+            //        }
         }
     }
-}
+    }

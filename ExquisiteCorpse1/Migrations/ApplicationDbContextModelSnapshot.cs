@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using ExquisiteCorpse1.Data.Tests.Models;
+using ExquisiteCorpse1.Models;
 
-namespace ExquisiteCorpse1.Migrations.TestDb
+namespace ExquisiteCorpse1.Migrations
 {
-    [DbContext(typeof(TestDbContext))]
-    partial class TestDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ApplicationDbContext))]
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -119,17 +119,20 @@ namespace ExquisiteCorpse1.Migrations.TestDb
 
             modelBuilder.Entity("ExquisiteCorpse1.Models.UserCorpse", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserCorpseId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<int>("CorpseId");
 
                     b.Property<string>("Status");
 
-                    b.Property<int>("UserCorpseId");
+                    b.Property<string>("UserId");
 
-                    b.HasKey("UserId", "CorpseId");
+                    b.HasKey("UserCorpseId");
 
-                    b.HasAlternateKey("UserCorpseId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("CorpseId");
 
@@ -278,7 +281,8 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                 {
                     b.HasOne("ExquisiteCorpse1.Models.Corpse", "Corpse")
                         .WithMany("Sections")
-                        .HasForeignKey("CorpseId");
+                        .HasForeignKey("CorpseId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "User")
                         .WithMany("Sections")
@@ -287,13 +291,14 @@ namespace ExquisiteCorpse1.Migrations.TestDb
 
             modelBuilder.Entity("ExquisiteCorpse1.Models.UserCorpse", b =>
                 {
-                    b.HasOne("ExquisiteCorpse1.Models.Corpse", "Corpse")
-                        .WithMany("UserCorpses")
-                        .HasForeignKey("CorpseId");
-
                     b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("UserCorpses")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("ExquisiteCorpse1.Models.Corpse", "Corpse")
+                        .WithMany("UserCorpses")
+                        .HasForeignKey("CorpseId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ExquisiteCorpse1.Models.UserSection", b =>
@@ -304,39 +309,45 @@ namespace ExquisiteCorpse1.Migrations.TestDb
 
                     b.HasOne("ExquisiteCorpse1.Models.Section", "Section")
                         .WithMany()
-                        .HasForeignKey("SectionId");
+                        .HasForeignKey("SectionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
                         .WithMany("Claims")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("ExquisiteCorpse1.Models.ApplicationUser")
                         .WithMany("Claims")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
                     b.HasOne("ExquisiteCorpse1.Models.ApplicationUser")
                         .WithMany("Logins")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
                         .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ExquisiteCorpse1.Models.ApplicationUser")
                         .WithMany("Roles")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

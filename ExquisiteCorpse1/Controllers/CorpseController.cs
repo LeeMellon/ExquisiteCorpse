@@ -48,7 +48,7 @@ namespace ExquisiteCorpse1.Controllers
             return View();
         }
 
-        [HttpPost]
+      
         public async Task<IActionResult> Create(Corpse corpse)
         {
             List<ApplicationUser> friendsList = new List<ApplicationUser> { };
@@ -59,6 +59,7 @@ namespace ExquisiteCorpse1.Controllers
             {
                 var thisFriend = _db.ApplicationUsers.FirstOrDefault(au => au.Id == id);
                 friendsList.Add(thisFriend);
+                //corpse.Players.Add(thisFriend);
                                
             }
             corpse.Title = Request.Form["title"] + "'s Corpse";

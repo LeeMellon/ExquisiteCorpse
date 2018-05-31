@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ExquisiteCorpse1.Migrations.TestDb
+namespace ExquisiteCorpse1.Migrations
 {
-    public partial class Rebuild : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -113,7 +113,7 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -135,7 +135,7 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                         column: x => x.CorpseId,
                         principalTable: "Corpses",
                         principalColumn: "CorpseId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Sections_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -148,26 +148,28 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                 name: "UsersCorpses",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    CorpseId = table.Column<int>(nullable: false),
                     UserCorpseId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGeneratedOnAdd", true),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    CorpseId = table.Column<int>(nullable: false),
+                    Status = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersCorpses", x => new { x.UserId, x.CorpseId });
-                    table.UniqueConstraint("AK_UsersCorpses_UserCorpseId", x => x.UserCorpseId);
+                    table.PrimaryKey("PK_UsersCorpses", x => x.UserCorpseId);
+                    table.ForeignKey(
+                        name: "FK_UsersCorpses_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UsersCorpses_Corpses_CorpseId",
                         column: x => x.CorpseId,
                         principalTable: "Corpses",
                         principalColumn: "CorpseId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UsersCorpses_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,7 +190,7 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,7 +210,7 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,13 +228,13 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -259,7 +261,7 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                         column: x => x.SectionId,
                         principalTable: "Sections",
                         principalColumn: "SectionId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -292,6 +294,11 @@ namespace ExquisiteCorpse1.Migrations.TestDb
                 name: "IX_Sections_UserId",
                 table: "Sections",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UsersCorpses_ApplicationUserId",
+                table: "UsersCorpses",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UsersCorpses_CorpseId",

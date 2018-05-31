@@ -8,8 +8,8 @@ using ExquisiteCorpse1.Models;
 namespace ExquisiteCorpse1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180523003715_StatusToUserCorpse")]
-    partial class StatusToUserCorpse
+    [Migration("20180524170645_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -120,17 +120,20 @@ namespace ExquisiteCorpse1.Migrations
 
             modelBuilder.Entity("ExquisiteCorpse1.Models.UserCorpse", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserCorpseId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<int>("CorpseId");
 
                     b.Property<string>("Status");
 
-                    b.Property<int>("UserCorpseId");
+                    b.Property<string>("UserId");
 
-                    b.HasKey("UserId", "CorpseId");
+                    b.HasKey("UserCorpseId");
 
-                    b.HasAlternateKey("UserCorpseId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("CorpseId");
 
@@ -289,14 +292,13 @@ namespace ExquisiteCorpse1.Migrations
 
             modelBuilder.Entity("ExquisiteCorpse1.Models.UserCorpse", b =>
                 {
+                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserCorpses")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("ExquisiteCorpse1.Models.Corpse", "Corpse")
                         .WithMany("UserCorpses")
                         .HasForeignKey("CorpseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("UserCorpses")
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

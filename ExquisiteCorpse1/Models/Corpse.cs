@@ -15,7 +15,7 @@ namespace ExquisiteCorpse1.Models
         public int CorpseId { get; set; }
         public string Title { get; set; }
         public List<Section> Sections { get; set; }
-        public List<ApplicationUser> Players { get; set; }
+        public virtual List<ApplicationUser> Players { get; set; }
         public int Rounds { get; set; }
         public int CurrentRound { get; set; }
         public int CurrentPlayerIndex { get; set; }
@@ -29,6 +29,11 @@ namespace ExquisiteCorpse1.Models
         {
 
             return Sections[Sections.Count - 1].Stub;
+        }
+
+        public List<ApplicationUser> GetPlayers()
+        {
+            return Players;
         }
 
         public string GetCurrentPlayerId()
@@ -45,6 +50,8 @@ namespace ExquisiteCorpse1.Models
         {
             return Players[CurrentPlayerIndex].PhoneNumber;
         }
+
+    
 
         public void SendInvite()
         {

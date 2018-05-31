@@ -7,7 +7,8 @@
         $('.corpse-display-all').click(function () {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("DisplayAllView", "ApplicationUser",  "All")', //All corpses
+                url: '@Url.Action("DisplayAllView", "ApplicationUser")', //All corpses
+                data: { viewOption: "All" },
                 success: function (result) {
                     $('#corpse-all-view').html(result);
 
@@ -18,7 +19,8 @@
          $('.corpse-display-turn').click(function () {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("DisplayAllView", "ApplicationUser", "Turn")', //Waiting for you
+                url: '@Url.Action("DisplayAllView", "ApplicationUser")', //Waiting for you
+                data: { viewOption: "Turn" },
                 success: function (result) {
                     $('#corpse-turn-view').html(result);
 
@@ -42,7 +44,8 @@
          $('.corpse-display-waiting').click(function () {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("DisplayAllView", "ApplicationUser", "Waiting")', //Waiting for someone else
+                url: '@Url.Action("DisplayAllView", "ApplicationUser")', //Waiting for someone else
+                data: { viewOption: "Waiting" },
                 success: function (result) {
                     $('#corpse-waiting-view').html(result);
 
@@ -54,7 +57,8 @@
          $('.corpse-display-complete').click(function () {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("DisplayAllView", "ApplicationUser", "Complete")', //Completed
+                url: '@Url.Action("DisplayAllView", "ApplicationUser")', //Completed
+                data: { viewOption: "Complete" },
                 success: function (result) {
                     $('#corpse-complete-view').html(result);
 

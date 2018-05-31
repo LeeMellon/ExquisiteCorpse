@@ -12,7 +12,7 @@ namespace ExquisiteCorpse1.Models
         public virtual List<Section> Sections { get; set; }
         public virtual List<UserCorpse> UserCorpses { get; set; }
         public virtual List<ApplicationUser> Friends { get; set; }
-        
+
 
         public ApplicationUser()
         {
@@ -37,7 +37,7 @@ namespace ExquisiteCorpse1.Models
         }
         public void AddFriend(ApplicationUser friend)
         {
-            this.Friends.Add(friend);
+            Friends.Add(friend);
         }
 
     }

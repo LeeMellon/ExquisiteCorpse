@@ -8,9 +8,10 @@ using ExquisiteCorpse1.Models;
 namespace ExquisiteCorpse1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180531085505_MadeCorpsePlayersVirtual")]
+    partial class MadeCorpsePlayersVirtual
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
@@ -119,17 +120,20 @@ namespace ExquisiteCorpse1.Migrations
 
             modelBuilder.Entity("ExquisiteCorpse1.Models.UserCorpse", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserCorpseId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<int>("CorpseId");
 
                     b.Property<string>("Status");
 
-                    b.Property<int>("UserCorpseId");
+                    b.Property<string>("UserId");
 
-                    b.HasKey("UserId", "CorpseId");
+                    b.HasKey("UserCorpseId");
 
-                    b.HasAlternateKey("UserCorpseId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("CorpseId");
 
@@ -288,14 +292,13 @@ namespace ExquisiteCorpse1.Migrations
 
             modelBuilder.Entity("ExquisiteCorpse1.Models.UserCorpse", b =>
                 {
+                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserCorpses")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("ExquisiteCorpse1.Models.Corpse", "Corpse")
                         .WithMany("UserCorpses")
                         .HasForeignKey("CorpseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ExquisiteCorpse1.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("UserCorpses")
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
